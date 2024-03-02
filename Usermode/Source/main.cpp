@@ -44,6 +44,7 @@ int main() {
 				const auto force_jump = driver::read_memory<DWORD>(driver, client + client_dll::dwForceJump);
 
 				if (space_pressed && in_air) {
+					Sleep(5);
 					driver::write_memory(driver, client + client_dll::dwForceJump, 65537);
 				}
 				else if (space_pressed && !in_air) {
