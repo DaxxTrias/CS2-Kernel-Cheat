@@ -1,6 +1,19 @@
 #pragma once
 #include <Windows.h>
 #include <TlHelp32.h>
+#include <iostream>
+#include <source_location>
+
+void Assert(bool expr, std::string_view msg, std::string_view success_msg = "", std::source_location location = std::source_location::current()) {
+	if (!expr) {
+		std::cerr << "[X] " << msg << '\n'
+			<< "File: " << location.file_name()
+			<< "Line: " << location.line() << ":" << location.column() << '\n'
+			<< "Function: " << location.function_name();
+		abort();
+	}
+	else if(!success_msg.empty()) std::cout << "[+] " << success_msg << '\n';
+}
 
 DWORD get_process_id(const wchar_t* process_name) {
 
