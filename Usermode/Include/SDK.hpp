@@ -30,7 +30,7 @@ private:
 	uint32_t index;
 };
 
-class CEntityIdentity {
+class CEntityIden {
 public:
 	uint64_t entity_ptr;
 	uint8_t padding_0[0x8];
@@ -40,8 +40,8 @@ public:
 
 class CEntityIdentities {
 public:
-	std::array<CEntityIdentity, 512> ids(HANDLE driver) const noexcept {
-		return driver::read_memory<std::array<CEntityIdentity, 512>>(driver, reinterpret_cast<uint64_t>(this));
+	std::array<CEntityIden, 512> ids(HANDLE driver) const noexcept {
+		return driver::read_memory<std::array<CEntityIden, 512>>(driver, reinterpret_cast<uint64_t>(this));
 	}
 };
 
@@ -62,7 +62,7 @@ public:
 
 		CEntityIdentities* segment = identity_segments[index_segment];
 
-		CEntityIdentity identity = segment->ids(driver)[index & 512];
+		CEntityIden identity = segment->ids(driver)[index & 512];
 
 		return identity.entity_handle.GetEntryIndex() == index ? identity.entity_ptr : 0;
 	}
@@ -84,7 +84,7 @@ public:
 
 		CEntityIdentities* segment = identity_segments[SegmentIndex];
 
-		CEntityIdentity identity = segment->ids(driver)[pawnIndex & 512];
+		CEntityIden identity = segment->ids(driver)[pawnIndex & 512];
 
 		return identity.entity_handle.GetEntryIndex() == pawnIndex ? identity.entity_ptr : 0;
 	}
